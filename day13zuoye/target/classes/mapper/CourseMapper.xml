@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.CourseMapper">
+	<select id="findByAll" resultType="Course" parameterType="Course">
+		select * from course
+	</select>
+	
+	<insert id="addCourse" parameterType="course">
+		insert into course value(null,#{cname},null,null)
+	</insert>
+</mapper>

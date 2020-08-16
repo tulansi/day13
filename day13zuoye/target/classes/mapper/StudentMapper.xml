@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.StudentMapper">
+	<select id="findUserPage" resultType="StudentVo" parameterType="StudentVo">
+		select * from student1,course
+		<where>
+			student1.cid=course.cid
+			<if test="sname!=null and sname!=''">
+				and sname like '%${sname}%'
+			</if>
+			<!-- <if test="grade!=null and grade!=''">
+				and student1.grade=#{grade}
+			</if> -->
+			<if test="start!=null">
+				and entrytime &gt;=#{start}
+			</if>
+			<if test="end!=null">
+				and entrytime &lt;=#{end}
+			</if>
+		</where>
+	</select>
+	
+	<update id="updateStu" parameterType="Student">
+		update student1 set sname=#{sname},age=#{age},scode=#{scode},grade=#{grade},entrytime=#{entrytime},createtime=#{createtime},cid=#{cid} where sid=#{sid}
+	</update>
+	
+	<insert id="addStu" parameterType="Student">
+		insert into student1 value(null,#{sname},#{age},#{scode},#{grade},#{entrytime},#{createtime},#{cid})
+	</insert>
+	
+	<delete id="deleteStu" parameterType="int">
+		delete from student1 where sid=#{sid}
+	</delete>
+	
+	<select id="echartdFindAll" resultType="StudentVo">
+		 select course.cname,count(student1.sid) as num from course left join student1 on course.cid=student1.cid group by course.cname 
+	</select>
+</mapper>
